@@ -191,8 +191,8 @@
             </div>
             
             <div id="nursing-return" class="result-card info">
-                <div class="card-header">護理退藥提示</div>
-                <div id="nursing-text">請輸入完整資訊以獲取退藥建議</div>
+                <div class="card-header">護理餘藥提示</div>
+                <div id="nursing-text">請輸入完整資訊以獲取餘藥建議</div>
             </div>
             
             <div class="card">
@@ -206,7 +206,7 @@
         </div>
         
         <div class="footer">
-            © 2025 AFTERNOON • Version 1.0.4
+            © 2025 AFTERNOON • Version 1.0.5
         </div>
     </div>
 
@@ -286,7 +286,7 @@
             pharmacyText.textContent = pharmacyRefill.text;
             pharmacyCard.className = `result-card ${pharmacyRefill.level}`;
             
-            // 護理退藥提示
+            // 護理餘藥提示
             const nursingReturn = calculateNursingReturn(shouldN, shouldR, actualNValue, actualRValue, missingN, missingR, extraN, extraR, timeHours);
             nursingText.textContent = nursingReturn.text;
             nursingCard.className = `result-card ${nursingReturn.level}`;
@@ -440,14 +440,14 @@
             };
         }
 
-        // 計算護理退藥
+        // 計算護理餘藥
         function calculateNursingReturn(shouldN, shouldR, actualN, actualR, missingN, missingR, extraN, extraR, timeHours) {
             // 觸發條件：漏服超過 8 小時且需要跳過本劑
             const hasOverdueSkip = (missingN > 0 || missingR > 0) && timeHours > 8;
             
             if (!hasOverdueSkip) {
                 return {
-                    text: "無需護理退藥。",
+                    text: "無護理餘藥需處理。",
                     level: "success"
                 };
             }
@@ -463,13 +463,13 @@
             
             if (returnItems.length === 0) {
                 return {
-                    text: "無需護理退藥（病人已服完或多服）。",
+                    text: "無餘藥需處理（病人已服完或多服）。",
                     level: "success"
                 };
             }
             
             return {
-                text: `需退回 ${returnItems.join(' 和 ')}。`,
+                text: `需回收 ${returnItems.join(' 和 ')}，請將多餘藥品送回藥局。`,
                 level: "warning"
             };
         }
